@@ -47,6 +47,10 @@
         buttonKeyPress: function () {
             this.htmlContent("keyPress事件被触发！");
         },
+        buttonKeyOut: function () {
+            this.htmlContent.extend({rateLimit:2000})
+            this.htmlContent("<a href='#'>百度一下</a>");
+        },
 
         //submit
         submitForm: function (formElement) {
@@ -67,13 +71,18 @@
         chosenCompanies: ko.observableArray(['百度'])
     };
 
+    viewModel.choiceUnitTypeValue.subscribe(function (newValue) {
+        alert("The person's new name is " + newValue + " event:" + event);
+    })
+
     //任意JS函数
     function updateUnitName() {
         viewModel.unitName("中部星城科技");
     }
 
+    // 激活绑定才能生效，使用ko的组件
     $(function () {
-        ko.applyBindings(viewModel);//完成绑定
+        ko.applyBindings(viewModel);
     });
 </script>
 
@@ -88,7 +97,7 @@
         }
     </style>
     <label>公司类型：</label>
-    <select data-bind="options:unitTypeOptions, optionsCaption:'---请选择公司类型---',optionsText: 'text', optionsValue: 'value', value:choiceUnitTypeValue"></select><br/>
+    <select data-bind="options:unitTypeOptions, optionsCaption:'---请选择公司类型---', optionsText: 'text', optionsValue: 'value', value:choiceUnitTypeValue"></select><br/>
     <input type="checkbox" data-bind="checked:visibleLabel"/>
     <label data-bind="css: { testClass: visibleLabel}">启用展示</label>
 
@@ -96,6 +105,12 @@
 
     <a data-bind="attr: { title: tips},style:{'background-color':visibleLabel()?'red':'white'}">公司官网</a>
     <button data-bind="click:function(){viewModel.tips('knockoutJS');}">切换a标签提示信息</button>
+
+
+    <label data-bind="html:htmlContent"></label><br/>
+    <div data-bind="event:{mouseover:buttonKeyPress, mouseout:buttonKeyOut} ">
+        鼠标移入改变html元素绑定内容
+    </div>
 </div>
 
 </body>
