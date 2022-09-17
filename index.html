@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="libs/knockout-3.4.0.debug.js"></script>
+    <script src="libs/jquery-2.1.1.min.js"></script>
+
+
+</head>
+
+<script type="text/javascript">
+
+    var viewModel = {
+        //value、text
+        unitName: ko.observable(""),
+        address: ko.observable(""),
+
+        //click
+        //viewModel内JS函数
+        updateAddress: function () {
+            this.address("湖南长沙雨花区");
+        },
+
+        //visible
+        visibleButton: ko.observable(true),
+
+        //options
+        unitTypeOptions: ko.observableArray([
+            {text: "有限公司", value: "1"},
+            {text: "有限责任公司", value: "2"},
+            {text: "国有独资公司", value: "3"},
+            {text: "股份有限公司", value: "4"}
+        ]),
+        choiceUnitTypeValue: ko.observable(),
+
+        //checked
+        visibleLabel: ko.observable(true),
+
+        //attr
+        tips: ko.observable("hello"),
+
+        //html
+        htmlContent: ko.observable("<a href='#'>百度一下</a>"),
+
+        //event
+        buttonKeyPress: function () {
+            this.htmlContent("keyPress事件被触发！");
+        },
+
+        //submit
+        submitForm: function (formElement) {
+            //执行逻辑
+            //执行表单提交
+            //或返回到默认表单提交return true
+            return true;
+        },
+
+        //enable
+        userNameEnable: ko.observable(false),
+
+        //disable
+        passwordDisable: ko.observable(true),
+
+        //selectedOptions
+        companyOptions: ko.observableArray(['百度', '阿里', '腾讯']),
+        chosenCompanies: ko.observableArray(['百度'])
+    };
+
+    //任意JS函数
+    function updateUnitName() {
+        viewModel.unitName("中部星城科技");
+    }
+
+    $(function () {
+        ko.applyBindings(viewModel);//完成绑定
+    });
+</script>
+
+<body>
+
+
+<div style="margin-top:50px;">
+    <style type="text/css">
+        .testClass {
+            background-color: #ffd800;
+            font-size: 16px;
+        }
+    </style>
+    <label>公司类型：</label>
+    <select data-bind="options:unitTypeOptions, optionsCaption:'---请选择公司类型---',optionsText: 'text', optionsValue: 'value', value:choiceUnitTypeValue"></select><br/>
+    <input type="checkbox" data-bind="checked:visibleLabel"/>
+    <label data-bind="css: { testClass: visibleLabel}">启用展示</label>
+
+    <label data-bind="text:'选中值：'+choiceUnitTypeValue(),visible:visibleLabel"></label><br/>
+
+    <a data-bind="attr: { title: tips},style:{'background-color':visibleLabel()?'red':'white'}">公司官网</a>
+    <button data-bind="click:function(){viewModel.tips('knockoutJS');}">切换a标签提示信息</button>
+</div>
+
+</body>
+
+</html>
