@@ -1,10 +1,56 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script src="../../libs/knockout-3.4.0.debug.js"></script>
+    <script src="../../libs/jquery-2.1.1.min.js"></script>
+
 </head>
+
+<script type="text/javascript">
+
+
+    var viewModel = {
+        // ko.observable对象实际上是函数。
+        personName:ko.observable('yh'),
+        personAge:ko.observable('26'),
+    };
+
+    // 该data-bind属性不是 HTML 原生的，尽管它完全没问题（它严格符合 HTML 5，并且不会导致 HTML 4 出现问题，即使验证器会指出它是一个无法识别的属性）。但是由于浏览器不知道是什么意思，所以需要激活 Knockout 才能生效。
+    // 当 DOM 准备好使用时执行该函数。激活 Knockout，
+    $(function () {
+        ko.applyBindings(viewModel);
+    });
+
+    // 把新值写入到可观察对象  2种方法
+
+    // 1:要将新值写入可观察对象，请调用可观察对象并将新值作为参数传递
+    // viewModel.personName('禹慧')
+    // viewModel.personAge('100')
+
+    // 2:要将值写入模型对象上的多个可观察属性，您可以使用链接语法。
+    viewModel.personName('禹慧').personAge('100ss')
+
+
+    // observables 的全部意义在于它们可以被观察到，也就是说，其他代码可以说它希望收到更改通知。这就是 KO 的许多内置绑定在内部所做的。
+    // 因此，当您编写 时data-bind="text: personName"，text绑定将自己注册为在personName更改时收到通知
+    // 当您通过调用将 name 值更改为 viewModel.personName('禹慧')，text绑定将自动更新关联的 DOM 元素的文本内容。这就是对视图模型的更改自动传播到视图的方式。
+
+
+</script>
+
+
+
 <body>
-$END$
+<!-- data-bind语法将继续工作。不同之处在于它现在能够检测更改，并且当它检测到更改时，它会自动更新视图。：-->
+
+The name is <span data-bind="text: personName"></span>
+
+<div>```````````</div>
+
+The age is <span data-bind="text: personAge"></span>
+
+
 </body>
 </html>
