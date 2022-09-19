@@ -1,0 +1,33 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script src="../../libs/knockout-3.4.0.debug.js"></script>
+    <script src="../../libs/jquery-2.1.1.min.js"></script>
+
+</head>
+<body>
+
+<div id="threeForeach">
+    <h3 style="color: aqua;">功能：使用$data引用每个数组条目</h3>
+    <ul data-bind="foreach: months">
+        <li>
+           当前是: <b data-bind="text: $data"></b>
+        </li>
+    </ul>
+</div>
+</body>
+
+<script type="text/javascript">
+
+    // 启用Knockout使绑定生效
+    // 使用$index、$parent和其他上下文属性
+    ko.applyBindings({
+        months: ['说', '学', '逗', '唱']
+    }, $("#threeForeach")[0]);
+
+</script>
+
+
+</html>

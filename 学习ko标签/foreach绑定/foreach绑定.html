@@ -1,0 +1,80 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script src="../../libs/knockout-3.4.0.debug.js"></script>
+    <script src="../../libs/jquery-2.1.1.min.js"></script>
+
+</head>
+
+<script type="text/javascript">
+<!--  foreach: 绑定到DOM元素上，将关联的viewModel中指定集合或数组循环输出，并动态更改html代码。配合table、div等控件使用  -->
+
+function unitViewModel(name, addressInfo) {
+             unitName = ko.observable(name);
+             address = ko.observable(addressInfo);
+         }
+
+     var viewModel = {
+             unitList: ko.observableArray(),
+
+         // 添加单元信息
+       addUnitInfo: function () {
+                 //  observableArray数组操作
+                 // (移除，增加，插入，移除单一元素，反转顺序，排序，移除部分元素)
+                 // viewModel.unitList.push(new unitViewModel("", ""));
+           viewModel.unitList.unshift( new unitViewModel("", "") )
+       },
+
+         // 删除单元信息
+       removeUnitInfo: function (unit) {
+                 viewModel.unitList.remove(unit);
+             },
+   };
+
+     $(function () {
+             ko.applyBindings(viewModel);//完成绑定，启用Knockout使绑定生效
+             viewModel.unitList.push(new unitViewModel("星城科技", "湖南-长沙"));
+             viewModel.unitList.push(new unitViewModel("星城集团", "湖南-长沙"));
+             viewModel.unitList.push(new unitViewModel("中车集团", "湖南-株洲"));
+         });
+
+
+</script>
+
+
+
+<body>
+<table class="table table-bordered" style="margin-top:5px;">
+    <thead>
+    <tr>
+        <th>公司名称</th>
+        <th>公司地址</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody data-bind="foreach:unitList">
+    <tr>
+        <td><input type="text" data-bind="value:unitName" /></td>
+        <td><input type="text" data-bind="value:address" /></td>
+        <td><button class="btn btn-danger" data-bind="click:$root.removeUnitInfo">删除</button></td>
+    </tr>
+    </tbody>
+    <tfoot>
+    <tr>
+        <td colspan="3">
+            <button type="button" class="btn btn-primary" data-bind="click:addUnitInfo">增加</button>
+        </td>
+    </tr>
+    </tfoot>
+</table>
+<div>
+    <label>现有公司信息列表:</label>
+    <div data-bind="foreach:unitList">
+        <label data-bind="text:'公司名称:'+unitName()+'.公司地址:'+address()+'.'"></label><br />
+    </div>
+</div>
+
+</body>
+</html>

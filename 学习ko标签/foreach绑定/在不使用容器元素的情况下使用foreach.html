@@ -1,0 +1,47 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script src="../../libs/knockout-3.4.0.debug.js"></script>
+    <script src="../../libs/jquery-2.1.1.min.js"></script>
+
+</head>
+<body>
+<div id="sixForeach">
+    <h3 style="color: aqua;">在不使用容器元素的情况下使用foreach</h3>
+    <ul>
+        <li class="header">Header item</li>
+        <li>Item A</li>
+        <li>Item B</li>
+        <li>Item C</li>
+    </ul>
+    <ul>
+        <li class="header">Header item</li>
+        <!-- ko foreach: myItems -->
+<!--        <li>Item <span data-bind="text: $data"></span></li>-->
+
+
+        <li>Item <span data-bind="text: $data"></span></li>
+        <!-- /ko -->
+
+    </ul>
+</div>
+
+</body>
+
+<script type="text/javascript">
+
+    // 启用Knockout使绑定生效
+    // 在不使用容器元素的情况下使用foreach
+    ko.applyBindings({
+        myItems: ['A', 'B', 'C','D']
+    }, $("#sixForeach")[0]);
+
+
+
+</script>
+
+
+
+</html>

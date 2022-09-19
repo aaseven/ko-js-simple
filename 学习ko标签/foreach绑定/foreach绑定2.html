@@ -1,0 +1,217 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script src="../../libs/knockout-3.4.0.debug.js"></script>
+    <script src="../../libs/jquery-2.1.1.min.js"></script>
+
+</head>
+<body>
+
+<div id="oneForeach">
+    <h3 style="color: aqua;">功能：遍历一个数组</h3>
+    <table>
+        <thead>
+        <tr>
+            <th>--姓--</th>
+            <th>--名--</th>
+            <th>--年龄--</th>
+        </tr>
+        </thead>
+        <tbody data-bind="foreach: people">
+        <tr>
+            <td data-bind="text: firstName"></td>
+            <td data-bind="text: lastName"></td>
+            <td data-bind="text: age"></td>
+        </tr>
+        </tbody>
+    </table>
+    <table>
+        <thead>
+        <tr>
+            <th>--姓--</th>
+            <th>--名--</th>
+            <th>--年龄--</th>
+        </tr>
+        </thead>
+        <tbody data-bind="foreach: people">
+        <tr>
+            <td data-bind="text: $data.firstName"></td>
+            <td data-bind="text: $data.lastName"></td>
+            <td data-bind="text: $data.age"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<hr/>
+<!-- Live example with add/remove -->
+<div id="twoForeach">
+    <h3 style="color: aqua;">功能：添加/删除的实例</h3>
+    <ul data-bind="foreach: people">
+        <li>
+            Name at position <span data-bind="text: $index"> </span>:
+            <span data-bind="text: name"> </span>
+            <a href="#" data-bind="click: $parent.removePerson">Remove</a>
+        </li>
+    </ul>
+    <button data-bind="click: addPerson">Add</button>
+</div>
+<hr/>
+<!-- Referring to each array entry using $data -->
+<div id="threeForeach">
+    <h3 style="color: aqua;">Parameters：使用$data引用每个数组条目</h3>
+    <ul data-bind="foreach: months">
+        <li>
+            The current item is: <b data-bind="text: $data"></b>
+        </li>
+    </ul>
+</div>
+<hr/>
+<!-- Using $index, $parent, and other context properties -->
+<div id="fourForeach">
+    <h3 style="color: aqua;">Parameters：使用$index、$parent和其他上下文属性</h3>
+    <h1 data-bind="text: blogPostTitle"></h1>
+    <ul data-bind="foreach: likes">
+        <li>
+            <b data-bind="text: name"></b> likes the blog post <b data-bind="text: $parent.blogPostTitle"></b>
+        </li>
+    </ul>
+</div>
+</hr>
+<!-- Using “as” to give an alias to “foreach” items -->
+<div id="fiveForeach">
+    <h3 style="color: aqua;">使用“as”为“foreach”项提供别名</h3>
+    <ul data-bind="foreach: { data: categories, as: 'category' }">
+        <li>
+            <ul data-bind="foreach: { data: items, as: 'item' }">
+                <li>
+                    <span data-bind="text: category.name"></span>:
+                    <span data-bind="text: item"></span>
+                </li>
+            </ul>
+        </li>
+    </ul>
+    <ul data-bind="foreach: { data: categories, as: 'category', noChildContext: true }">
+        <li>
+            <ul data-bind="foreach: { data: category.items, as: 'item', noChildContext: true }">
+                <li>
+                    <span data-bind="text: category.name"></span>:
+                    <span data-bind="text: item"></span>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</div>
+</hr>
+<!-- Using foreach without a container element -->
+<div id="sixForeach">
+    <h3 style="color: aqua;">在不使用容器元素的情况下使用foreach</h3>
+    <ul>
+        <li class="header">Header item</li>
+        <li>Item A</li>
+        <li>Item B</li>
+        <li>Item C</li>
+    </ul>
+    <ul>
+        <li class="header">Header item</li>
+        <!-- ko foreach: myItems -->
+        <li>Item <span data-bind="text: $data"></span></li>
+        <!-- /ko -->
+    </ul>
+</div>
+</hr>
+<!-- Post-processing or animating the generated DOM elements -->
+<div id="sevenForeach">
+    <h3 style="color: aqua;">对生成的DOM元素进行后期处理或动画处理</h3>
+    <ul data-bind="foreach: { data: myItems, afterAdd: yellowFadeIn }">
+        <li data-bind="text: $data"></li>
+    </ul>
+    <button data-bind="click: addItem">Add</button>
+</div>
+
+</body>
+
+<script type="text/javascript">
+
+
+    // 启用Knockout使绑定生效
+    // 遍历一个数组
+    ko.applyBindings({
+        people: [
+            {firstName: '小', lastName: '明',age:18},
+            {firstName: '张', lastName: '元',age:23},
+            {firstName: '李', lastName: '雷',age:76}
+        ]
+    }, $("#oneForeach")[0]);
+
+
+    // 添加/删除的实例
+    function AppViewModel() {
+        var self = this;
+        self.people = ko.observableArray([
+            {name: 'Bert'},
+            {name: 'Charles'},
+            {name: 'Denise'}
+        ]);
+        self.addPerson = function () {
+            self.people.push({name: "New at " + new Date()});
+        };
+        self.removePerson = function () {
+            self.people.remove(this);
+        }
+    }
+
+    ko.applyBindings(new AppViewModel(), $("#twoForeach")[0]);
+
+
+    // 使用$index、$parent和其他上下文属性
+    ko.applyBindings({
+        months: ['Jan', 'Feb', 'Mar', 'etc']
+    }, $("#threeForeach")[0]);
+
+
+    // 使用$data引用每个数组条目
+    ko.applyBindings({
+        blogPostTitle: "TEST",
+        likes: [
+            {name: "美文解析1"},
+            {name: "美文解析2"}
+        ]
+    }, $("#fourForeach")[0]);
+
+
+    // 使用“as”为“foreach”项提供别名
+    var viewModel = {
+        categories: ko.observableArray([
+            {name: 'Fruit', items: ['Apple', 'Orange', 'Banana']},
+            {name: 'Vegetables', items: ['Celery', 'Corn', 'Spinach']}
+        ])
+    };
+    ko.applyBindings(viewModel, $("#fiveForeach")[0]);
+
+
+    // 在不使用容器元素的情况下使用foreach
+    ko.applyBindings({
+        myItems: ['A', 'B', 'C']
+    }, $("#sixForeach")[0]);
+
+
+    // 对生成的DOM元素进行后期处理或动画处理
+    ko.applyBindings({
+        myItems: ko.observableArray(['A', 'B', 'C']),
+        yellowFadeIn: function (element, index, data) {
+            $(element).filter("li")
+                .animate({backgroundColor: 'yellow'}, 200)
+                .animate({backgroundColor: 'white'}, 800);
+        },
+        addItem: function () {
+            this.myItems.push('New item');
+        }
+    }, $("#sevenForeach")[0]);
+
+</script>
+
+
+
+</html>

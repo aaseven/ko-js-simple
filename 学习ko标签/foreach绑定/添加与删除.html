@@ -1,0 +1,49 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script src="../../libs/knockout-3.4.0.debug.js"></script>
+    <script src="../../libs/jquery-2.1.1.min.js"></script>
+
+</head>
+<body>
+
+<div id="twoForeach">
+    <h3 style="color: aqua;">功能：添加/删除的实例</h3>
+    <ul data-bind="foreach: people">
+        <li>
+            职位名称:<span data-bind="text: $index"> </span>
+            <span data-bind="text: name"> </span>
+            <a href="#" data-bind="click: $parent.removePerson">删除</a>
+        </li>
+    </ul>
+    <button data-bind="click: addPerson">新增</button>
+</div>
+</div>
+</body>
+
+<script type="text/javascript">
+
+    // 添加/删除的实例
+    function AppViewModel() {
+        var self = this;
+        self.people = ko.observableArray([
+            {name: '你好'},
+            {name: '世界'},
+            {name: '不太好'}
+        ]);
+        self.addPerson = function () {
+            self.people.push({name: "小明 " + new Date()});
+        };
+        self.removePerson = function () {
+            self.people.remove(this);
+        }
+    }
+// 启用Knockout使绑定生效
+    ko.applyBindings(new AppViewModel(), $("#twoForeach")[0]);
+
+</script>
+
+
+</html>

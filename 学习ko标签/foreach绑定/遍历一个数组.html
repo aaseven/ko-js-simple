@@ -1,0 +1,66 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script src="../../libs/knockout-3.4.0.debug.js"></script>
+    <script src="../../libs/jquery-2.1.1.min.js"></script>
+
+</head>
+<body>
+
+<div id="oneForeach">
+    <h3 style="color: aqua;">功能：遍历一个数组</h3>
+    <table>
+        <thead>
+        <tr>
+            <th>--姓--</th>
+            <th>--名--</th>
+            <th>--年龄--</th>
+        </tr>
+        </thead>
+        <tbody data-bind="foreach: people">
+        <tr>
+            <td data-bind="text: firstName"></td>
+            <td data-bind="text: lastName"></td>
+            <td data-bind="text: age"></td>
+        </tr>
+        </tbody>
+    </table>
+    <table>
+        <thead>
+        <tr>
+            <th>--姓--</th>
+            <th>--名--</th>
+            <th>--年龄--</th>
+        </tr>
+        </thead>
+        <tbody data-bind="foreach: people">
+        <tr>
+            <td data-bind="text: $data.firstName"></td>
+            <td data-bind="text: $data.lastName"></td>
+            <td data-bind="text: $data.age"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<hr/>
+</body>
+
+<script type="text/javascript">
+
+    // 启用Knockout使绑定生效
+    // 遍历一个数组
+    ko.applyBindings({
+        people: [
+            {firstName: '小', lastName: '明',age:18},
+            {firstName: '张', lastName: '元',age:23},
+            {firstName: '李', lastName: '雷',age:76}
+        ]
+    }, $("#oneForeach")[0]);
+
+</script>
+
+
+
+</html>

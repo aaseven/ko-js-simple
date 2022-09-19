@@ -1,0 +1,54 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script src="../../libs/knockout-3.4.0.debug.js"></script>
+    <script src="../../libs/jquery-2.1.1.min.js"></script>
+
+</head>
+<body>
+<div id="fiveForeach">
+    <h3 style="color: aqua;">使用“as”为“foreach”项提供别名</h3>
+    <ul data-bind="foreach: { data: categories, as: 'category' }">
+        <li>
+            <ul data-bind="foreach: { data: items, as: 'item' }">
+                <li>
+                    <span data-bind="text: category.name"></span>:
+                    <span data-bind="text: item"></span>
+                </li>
+            </ul>
+        </li>
+    </ul>
+    <ul data-bind="foreach: { data: categories, as: 'category', noChildContext: true }">
+        <li>
+            <ul data-bind="foreach: { data: category.items, as: 'item', noChildContext: true }">
+                <li>
+                    <span data-bind="text: category.name"></span>:
+                    <span data-bind="text: item"></span>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</div>
+</body>
+
+<script type="text/javascript">
+
+    // 使用“as”为“foreach”项提供别名
+    var viewModel = {
+        categories: ko.observableArray([
+            {name: 'Fruit', items: ['Apple', 'Orange', 'Banana']},
+            {name: 'Vegetables', items: ['Celery', 'Corn', 'Spinach']}
+        ])
+    };
+    // 启用Knockout使绑定生效
+    ko.applyBindings(viewModel, $("#fiveForeach")[0]);
+
+
+
+
+</script>
+
+
+</html>
