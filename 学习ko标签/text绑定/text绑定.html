@@ -1,0 +1,38 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>
+        text 绑定让DOM元素显示参数的值。对于 span 、 em 这些常用来表示文本的标签起作用，但是你想绑定在其他标签上也是可以的。
+    </title>
+
+    <script src="../../libs/knockout-3.4.0.debug.js"></script>
+    <script src="../../libs/jquery-2.1.1.min.js"></script>
+
+</head>
+<body>
+<!--
+Knockout 用参数的值设置DOM元素的text属性值；DOM元素原先的值会被复写。
+
+如果参数是一个observable变量，那么一旦参数的值发生变化，页面上绑定的值都会立即改变；如果不是，那么只会在第一次绑定的时候改变页面元素的文本值，页面上的值之后就不会再被改变。
+
+如果参数的类型不是number或者string（e.g., 对象或者数组），那么页面上展示的文本是对象到字符串等效转化的值，相当于yourParameter.toString()
+
+-->
+我的名字是: <span data-bind="text:name"></span>
+
+</body>
+<script type="text/javascript">
+
+    var viewModel = {
+        name: ko.observable()
+    };
+
+    viewModel.name('yuHui');
+
+    ko.applyBindings(viewModel);
+
+
+</script>
+
+
+</html>
