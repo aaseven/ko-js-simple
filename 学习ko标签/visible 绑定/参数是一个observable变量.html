@@ -1,0 +1,41 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title> visible 根据变量值的true或者false来控制DOM元素的显示或者隐藏。参数是一个observable 变量</title>
+
+    <script src="../../libs/knockout-3.4.0.debug.js"></script>
+    <script src="../../libs/jquery-2.1.1.min.js"></script>
+
+</head>
+
+<body>
+
+<!--
+    如果参数是一个observable 变量，无论参数的值什么时候发生变化，元素的visible属性也会发生改变的。
+
+    如果参数不是一个observable 变量，那么只会在第一次绑定的时候控制元素的visible属性，之后元素的visible属性不会发生变化。
+
+    注意 使用函数或者表达式控制元素的显示或者隐藏
+
+    可以是用javascript函数或者表达式作为参数；knockout会运行函数或者表达式，用返回值来作为参数，从而觉得元素的显示或者隐藏。
+
+-->
+<div data-bind="visible: showMessage">明天星期四</div>
+
+</body>
+
+
+<script type="text/javascript">
+    var viewModel = {
+        showMessage: ko.observable(true)
+    }
+
+    viewModel.showMessage(true); // 显示
+
+    // viewModel.showMessage(false); // 隐藏
+    ko.applyBindings(viewModel);
+
+</script>
+
+
+</html>

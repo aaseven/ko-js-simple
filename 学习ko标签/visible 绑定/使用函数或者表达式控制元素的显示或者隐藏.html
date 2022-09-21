@@ -1,0 +1,40 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script src="../../libs/knockout-3.4.0.debug.js"></script>
+    <script src="../../libs/jquery-2.1.1.min.js"></script>
+
+</head>
+
+<!--
+
+使用函数或者表达式控制元素的显示或者隐藏
+
+可以是用javascript函数或者表达式作为参数；knockout会运行函数或者表达式，用返回值来作为参数，从而觉得元素的显示或者隐藏。
+
+-->
+
+<body>
+
+<div data-bind="visible:myValues().length > 0">
+    明天吃肯德基
+</div>
+
+</body>
+<script type="text/javascript">
+
+    var viewModel = {
+        myValues:ko.observableArray([])
+    };
+
+    viewModel.myValues.push("苹果") // 往myValues数组中放了一个，数组就有length了，所以页面就显示了
+
+    ko.applyBindings(viewModel)
+
+</script>
+
+
+</html>
+
